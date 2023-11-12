@@ -1,0 +1,29 @@
+.login{
+    -fx-background-position: center;
+    -fx-background-image: url("com/example/reto1addihibernate/img/fondologin.jpg");
+}
+.promp{
+    -fx-prompt-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: F95C5C;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-text-fill: white;
+}
+.Vboxlogin{
+    -fx-border-color: white;
+    -fx-border-style: solid;
+}
+
+.vbox{
+    -fx-background-image: url("com/example/reto1addihibernate/img/fondoim.jpg");
+    -fx-background-size: 10px 10px 10px 10px;
+}
+
+.btnstyle{
+    -fx-background-radius: 55px;
+
+}
+.tabla{
+    -fx-alignment: center;
+    
+}
