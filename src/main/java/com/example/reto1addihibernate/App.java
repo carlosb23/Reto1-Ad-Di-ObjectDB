@@ -25,7 +25,32 @@ public class App extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
             Scene scene = new Scene(fxmlLoader.load());
+            myStage.setTitle(title);
+            myStage.setScene(scene);
+            myStage.show();
+        } catch (IOException e) {
+            System.out.println("Error al cargar el FXML");
+            throw new RuntimeException(e);
+        }
+    }
+    public static void ventanaDatos(String fxml){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
+            Scene scene = new Scene(fxmlLoader.load());
             myStage.setTitle("Ventana Pedidos");
+            myStage.setScene(scene);
+            myStage.show();
+        } catch (IOException e) {
+            System.out.println("Error al cargar el FXML");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void ventanaPedidos(String fxml){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
+            Scene scene = new Scene(fxmlLoader.load());
+            myStage.setTitle("Ventana editar Pedidos");
             myStage.setScene(scene);
             myStage.show();
         } catch (IOException e) {

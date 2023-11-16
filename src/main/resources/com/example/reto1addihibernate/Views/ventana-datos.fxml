@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="347.0" prefWidth="826.0" styleClass="vbox" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto1addihibernate.controllers.VentanaDatosController">
+   <center>
+      <TableView fx:id="tabledato" prefHeight="281.0" prefWidth="826.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="columId" prefWidth="94.0" text="ID" />
+          <TableColumn fx:id="columcodigo" prefWidth="109.0" text="CODIGO" />
+            <TableColumn fx:id="columcantidad" prefWidth="128.0" text="CANTIDAD" />
+            <TableColumn fx:id="columproduct" prefWidth="492.0" text="PRODUCTO_ID" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </center>
+   <top>
+      <Button fx:id="volver" alignment="CENTER" mnemonicParsing="false" onAction="#btnvolverVP" prefHeight="34.0" prefWidth="123.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Volver" textFill="#111111" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="700.0" top="10.0" />
+         </BorderPane.margin>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Img/user.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </top>
+   <bottom>
+      <FlowPane alignment="CENTER" hgap="20.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" top="20.0" />
+         </BorderPane.margin>
+      </FlowPane>
+   </bottom>
+</BorderPane>

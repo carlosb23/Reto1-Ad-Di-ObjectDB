@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,34 +42,25 @@ public class LoginController implements Initializable {
         String user = txtUser.getText();
         String pass = txtPassword.getText();
 
-        if( user.length()<4 || pass.length()<4 ){
-            info.setText("Introduce los datos");
-            info.setStyle("-fx-background-color:red; -fx-text-fill: white;");
-
-        } else{
-
-            /* ACCESO A BASE DE DATOS PARA LA VALIDACION */
-            Usuario u = (new UsuarioDAO()).validateUser( user, pass );
-
-            if(u==null){
-                info.setText("Usuario no encontrado");
-                info.setStyle("-fx-background-color:red; -fx-text-fill: white;");
-            }else {
-                info.setText("Usuario " + user + "(" + pass + ") correcto");
-                info.setStyle("-fx-background-color:green; -fx-text-fill: white;");
-
-                SessionData.setCurrentUser(u);
-
-                /* Guardar usuario en sesión e ir a la proxima ventana */
-
-                App.ventanaPrincipal("main-view.fxml","Colección de videojuegos");
-            }
-
+        Usuario usuario = (new UsuarioDAO().validateUser(user,pass)) ;
+        if (usuario != null) {
+            SessionData.setCurrentUser(usuario);
+            App.ventanaPrincipal("Views/ventanaPrincipal.fxml","Pedidos del usuario");
+        } else {
+            info.setText("Usuario incorrecto");
+            info.setStyle("-fx-background-color: red");
+            txtUser.setText("");
+            txtPassword.setText("");
         }
 
     }
 
     @FXML
     public void clickolvidar(Event event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Usuarios");
+        alert.setContentText("Usuario1: Carlos, Contraseña: 1234\n" +
+                "Usuario2: Leo, Contraseña: 1234");
+        alert.showAndWait();
     }
 }

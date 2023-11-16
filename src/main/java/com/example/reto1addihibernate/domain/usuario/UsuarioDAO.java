@@ -56,22 +56,21 @@ public class UsuarioDAO implements DAO<Usuario> {
 
     }
 
-    public Usuario validateUser(String user, String contrasena) {
-
+    public Usuario validateUser(String name, String password) {
         Usuario result = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query<Usuario> query = session.createQuery("from Usuario where nombre=:u and contrasena=:p", Usuario.class);
-            query.setParameter("u",user);
-            query.setParameter("p",contrasena);
+        try( Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Usuario> q = session.createQuery("from Usuario where username=:u and password=:p",Usuario.class);
+            q.setParameter("u",name);
+            q.setParameter("p",password);
 
             try {
-                result = query.getSingleResult();
+                result = q.getSingleResult();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
         return result;
-        }
+    }
     }
 
 

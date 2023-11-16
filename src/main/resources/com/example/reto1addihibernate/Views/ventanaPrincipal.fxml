@@ -114,6 +114,9 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </TableView>
          </center>
       </BorderPane>
