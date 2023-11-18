@@ -3,6 +3,7 @@ package com.example.reto1addihibernate.controllers;
 
 import com.example.reto1addihibernate.App;
 import com.example.reto1addihibernate.SessionData;
+import com.example.reto1addihibernate.domain.Items.Item;
 import com.example.reto1addihibernate.domain.pedido.Pedido;
 import com.example.reto1addihibernate.domain.pedido.PedidoDAO;
 import com.example.reto1addihibernate.domain.usuario.UsuarioDAO;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import java.io.IOException;
@@ -58,6 +60,8 @@ public class VentanaPrincipalController implements Initializable {
     private Button btnsalir;
     @javafx.fxml.FXML
     private MenuItem exitmenu;
+    @javafx.fxml.FXML
+    private Label NPedidos;
 
 
     @Override
@@ -65,6 +69,7 @@ public class VentanaPrincipalController implements Initializable {
 
         nomuser.setText(SessionData.getCurrentUser().getUsername());
         emailuser.setText(SessionData.getCurrentUser().getEmail());
+        NPedidos.setText(SessionData.getCurrentUser().getCantidapedidos()+ " pedidos");
 
         idColumn.setCellValueFactory((column)->{
             String id = String.valueOf(column.getValue().getId());
@@ -86,7 +91,7 @@ public class VentanaPrincipalController implements Initializable {
             return new SimpleStringProperty(fechaFormateada);
         });
         columnuser.setCellValueFactory((column)->{
-            String user = String.valueOf(column.getValue().getId());
+            String user = String.valueOf(column.getValue().getUsuario().getId());
             return new SimpleStringProperty(user);
         });
         columTotal.setCellValueFactory((column)->{
@@ -97,8 +102,11 @@ public class VentanaPrincipalController implements Initializable {
         tablaproduct.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pedido>() {
             @Override
             public void changed(ObservableValue<? extends Pedido> observableValue, Pedido pedido, Pedido t1) {
-               SessionData.setCurrentPedido(t1);
-                App.ventanaDatos("Views/ventana-datos.fxml");
+                if (t1 != null) {
+                    Pedido pedidoclick = tablaproduct.getSelectionModel().getSelectedItem();
+                    SessionData.setCurrentPedido(pedidoclick);
+                    App.ventanaDatos("Views/ventana-datos.fxml");
+                }
             }
         });
 

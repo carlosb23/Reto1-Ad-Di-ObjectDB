@@ -9,6 +9,7 @@ import com.example.reto1addihibernate.SessionData;
 import com.example.reto1addihibernate.domain.Items.Item;
 import com.example.reto1addihibernate.domain.Items.ItemDAO;
 import com.example.reto1addihibernate.domain.pedido.Pedido;
+import com.example.reto1addihibernate.domain.pedido.PedidoDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +49,7 @@ public class VentanaDatosController implements Initializable {
            return new SimpleStringProperty(id);
         });
         columcodigo.setCellValueFactory((fila)->{
-            String codigo = String.valueOf(fila.getValue().getCodigo());
+            String codigo = String.valueOf(fila.getValue().getCodigo().getCodigo());
             return new SimpleStringProperty(codigo);
         });
         columcantidad.setCellValueFactory((fila)->{
@@ -56,12 +57,14 @@ public class VentanaDatosController implements Initializable {
             return new SimpleStringProperty(cantidad);
         });
         columproduct.setCellValueFactory((fila)->{
-            String product = String.valueOf(fila.getValue().getProducto().getId());
+            String product = String.valueOf(fila.getValue().getProducto());
             return new SimpleStringProperty(product);
         });
 
-        /*observableListItem = FXCollections.observableArrayList(SessionData.getCurrentPedido().getItems());
-        tabledato.setItems(observableListItem);*/
+        observableListItem = FXCollections.observableArrayList();
+        SessionData.setCurrentPedido((new PedidoDAO().get(SessionData.getCurrentPedido().getId())));
+        observableListItem.setAll(SessionData.getCurrentPedido().getItems());
+        tabledato.setItems(observableListItem);
 
     }
 

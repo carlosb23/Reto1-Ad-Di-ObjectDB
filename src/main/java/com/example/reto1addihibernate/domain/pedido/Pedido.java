@@ -18,28 +18,31 @@ import java.util.List;
 @Entity
 @Table(name="pedido")
 public class Pedido implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="codigo")
+    @Column(name="codigo_pedido")
     private String codigo;
 
     @Column(name="fecha")
     private Date fecha;
 
-    @Column(name="usuario")
-    private Integer usuario;
+    /*@Column(name="usuario")
+    private Integer usuario;*/
 
     @Column(name="total")
     private Integer total;
 
-    /*@ManyToOne
-    @JoinColumn(name = "usuario", referencedColumnName = "")
-    private Usuario user;*/
+    @ManyToOne
+    @JoinColumn(name = "usuario", referencedColumnName = "id")
+    private Usuario usuario;
 
-    /*@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
-    private List<Item> items = new ArrayList<>();*/
+    @OneToMany(mappedBy = "codigo", fetch = FetchType.EAGER)
+    private List<Item> items = new ArrayList<>();
+
+
 
 
     public Pedido() {
@@ -51,8 +54,9 @@ public class Pedido implements Serializable {
                 "id=" + id +
                 ", codigo='" + codigo + '\'' +
                 ", fecha=" + fecha +
-                ", usuario=" + usuario +
                 ", total=" + total +
+                ", usuario=" + usuario.getId() +
+                /*", items=" + items +*/
                 '}';
     }
 }

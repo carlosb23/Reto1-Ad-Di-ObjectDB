@@ -7,6 +7,8 @@ import com.example.reto1addihibernate.domain.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 
 public class SessionData {
 
@@ -21,4 +23,12 @@ public class SessionData {
     @Getter
     @Setter
     private static Item currentItem;
+
+    @Getter
+    @Setter
+    private static ArrayList<Pedido> pedidos = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private static ArrayList<Item> items = new ArrayList<>();
 }

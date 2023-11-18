@@ -18,6 +18,8 @@
 
         <mapping class="com.example.reto1addihibernate.domain.usuario.Usuario"/>
         <mapping class="com.example.reto1addihibernate.domain.pedido.Pedido"/>
+        <mapping class="com.example.reto1addihibernate.domain.Items.Item"/>
+        <mapping class="com.example.reto1addihibernate.domain.productos.Producto"/>
 
     </session-factory>
 

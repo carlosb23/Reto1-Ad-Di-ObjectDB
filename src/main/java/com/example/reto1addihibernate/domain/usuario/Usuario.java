@@ -28,7 +28,15 @@ public class Usuario implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Transient
+    private Long cantidapedidos;
+
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Pedido> pedido = new ArrayList<>();
+
+    public Long getCantidapedidos() {
+        cantidapedidos = (long) pedido.size();
+        return cantidapedidos;
+    }
 }
