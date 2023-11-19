@@ -26,11 +26,6 @@ public class ProductoDAO implements DAO<Producto> {
     }
 
     @Override
-    public void update(Producto data) {
-
-    }
-
-    @Override
     public void delete(Producto data) {
 
     }

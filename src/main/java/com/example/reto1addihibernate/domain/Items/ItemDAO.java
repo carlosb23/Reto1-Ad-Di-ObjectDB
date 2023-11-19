@@ -34,12 +34,7 @@ public class ItemDAO implements DAO<Item> {
     public Item save(Item data) {
         return null;
     }
-
-    @Override
-    public void update(Item data) {
-
-    }
-
+    
     @Override
     public void delete(Item data) {
 

@@ -15,6 +15,19 @@ import java.util.List;
  */
 public class PedidoDAO implements DAO<Pedido> {
 
+
+    public static final HashMap<String,String> QUERY_ATTR;
+
+    static{
+        QUERY_ATTR = new HashMap<>();
+        QUERY_ATTR.put("codigo_pedido","select distinct(p.codigo_pedido) from pedido p");
+        QUERY_ATTR.put("fecha","select distinct(p.fecha) from pedido p");
+        QUERY_ATTR.put("usuario","select distinct(p.usuario) from pedido p");
+        QUERY_ATTR.put("total","select distinct(p.total) from pedido p");
+        QUERY_ATTR.put("cantidad","select distinct(i.cantidad) from items i");
+        QUERY_ATTR.put("product_id","select distinct(i.product_id) from items i");
+    }
+
     @Override
     public ArrayList<Pedido> getAll() {
         var salida = new ArrayList<Pedido>(0);
@@ -39,14 +52,25 @@ public class PedidoDAO implements DAO<Pedido> {
         return null;
     }
 
-    @Override
-    public void update(Pedido data) {
 
-    }
 
     @Override
     public void delete(Pedido data) {
+        HibernateUtil.getSessionFactory().inTransaction((session)->{
+            Pedido p = session.get(Pedido.class, data.getId());
+            session.remove(p);
+        });
 
+    }
+
+    public List<String> getDistinctFromAttribute(String attr){
+        ArrayList<String> results = new ArrayList<>(0);
+
+        try(Session s = HibernateUtil.getSessionFactory().openSession()){
+            Query<String> q = s.createQuery(QUERY_ATTR.get(attr), String.class);
+            results = (ArrayList<String>) q.getResultList();
+        }
+        return results;
     }
 
 }

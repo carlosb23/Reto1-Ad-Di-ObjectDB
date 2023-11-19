@@ -46,10 +46,7 @@ public class UsuarioDAO implements DAO<Usuario> {
         return null;
     }
 
-    @Override
-    public void update(Usuario data) {
 
-    }
 
     @Override
     public void delete(Usuario data) {

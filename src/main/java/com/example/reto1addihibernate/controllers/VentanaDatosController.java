@@ -38,7 +38,6 @@ public class VentanaDatosController implements Initializable {
     @FXML
     private Button volver;
 
-    private ObservableList<Item> observableListItem;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,10 +60,9 @@ public class VentanaDatosController implements Initializable {
             return new SimpleStringProperty(product);
         });
 
-        observableListItem = FXCollections.observableArrayList();
+
         SessionData.setCurrentPedido((new PedidoDAO().get(SessionData.getCurrentPedido().getId())));
-        observableListItem.setAll(SessionData.getCurrentPedido().getItems());
-        tabledato.setItems(observableListItem);
+        tabledato.getItems().addAll(SessionData.getCurrentPedido().getItems());
 
     }
 

@@ -24,11 +24,4 @@ public class SessionData {
     @Setter
     private static Item currentItem;
 
-    @Getter
-    @Setter
-    private static ArrayList<Pedido> pedidos = new ArrayList<>();
-
-    @Getter
-    @Setter
-    private static ArrayList<Item> items = new ArrayList<>();
 }

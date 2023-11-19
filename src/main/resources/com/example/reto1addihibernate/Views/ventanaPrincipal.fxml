@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="386.0" prefWidth="1202.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto1addihibernate.controllers.VentanaPrincipalController">
+<BorderPane prefHeight="589.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto1addihibernate.controllers.VentanaPrincipalController">
    <top>
       <MenuBar prefHeight="17.0" prefWidth="914.0" BorderPane.alignment="CENTER">
         <menus>
@@ -90,6 +90,9 @@
                            <FlowPane.margin>
                               <Insets left="20.0" />
                            </FlowPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Button fx:id="btnsalir" mnemonicParsing="false" onAction="#exit" prefHeight="31.0" prefWidth="83.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Exit" textFill="#ff0202">
                            <FlowPane.margin>
@@ -98,9 +101,23 @@
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                   </FlowPane>
+                  <Button fx:id="btnañadir" alignment="CENTER" mnemonicParsing="false" onAction="#newOrder" prefHeight="37.0" prefWidth="169.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Añadir nuevo pedido" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="55.0" top="100.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
                <BorderPane.margin>
                   <Insets />

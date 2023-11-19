@@ -46,7 +46,7 @@ public class App extends Application {
         }
     }
 
-    public static void ventanaPedidos(String fxml){
+    public static void ventanaeditPedidos(String fxml){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
             Scene scene = new Scene(fxmlLoader.load());

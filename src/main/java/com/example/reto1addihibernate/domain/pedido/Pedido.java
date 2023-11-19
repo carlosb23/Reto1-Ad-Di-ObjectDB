@@ -56,7 +56,7 @@ public class Pedido implements Serializable {
                 ", fecha=" + fecha +
                 ", total=" + total +
                 ", usuario=" + usuario.getId() +
-                /*", items=" + items +*/
+                ", items=" + items +
                 '}';
     }
 }

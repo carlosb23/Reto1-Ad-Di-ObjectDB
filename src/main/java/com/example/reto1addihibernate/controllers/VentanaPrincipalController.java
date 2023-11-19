@@ -62,6 +62,8 @@ public class VentanaPrincipalController implements Initializable {
     private MenuItem exitmenu;
     @javafx.fxml.FXML
     private Label NPedidos;
+    @javafx.fxml.FXML
+    private Button btnañadir;
 
 
     @Override
@@ -128,4 +130,15 @@ public class VentanaPrincipalController implements Initializable {
         stage.close();
     }
 
+    @javafx.fxml.FXML
+    public void newOrder(ActionEvent actionEvent) {
+        var p = new Pedido();
+        p.setUsuario(SessionData.getCurrentUser());
+        p.setFecha(new Date());
+        SessionData.setCurrentPedido(p);
+
+        App.ventanaeditPedidos("Views/ventana_edit_pedido.fxml");
+
+
+    }
 }
