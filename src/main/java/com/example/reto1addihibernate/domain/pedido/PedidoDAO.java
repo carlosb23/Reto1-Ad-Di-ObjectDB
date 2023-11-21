@@ -3,7 +3,9 @@ package com.example.reto1addihibernate.domain.pedido;
 import com.example.reto1addihibernate.domain.DAO;
 import com.example.reto1addihibernate.domain.HibernateUtil;
 import com.example.reto1addihibernate.SessionData;
+import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
@@ -15,18 +17,6 @@ import java.util.List;
  */
 public class PedidoDAO implements DAO<Pedido> {
 
-
-    public static final HashMap<String,String> QUERY_ATTR;
-
-    static{
-        QUERY_ATTR = new HashMap<>();
-        QUERY_ATTR.put("codigo_pedido","select distinct(p.codigo_pedido) from pedido p");
-        QUERY_ATTR.put("fecha","select distinct(p.fecha) from pedido p");
-        QUERY_ATTR.put("usuario","select distinct(p.usuario) from pedido p");
-        QUERY_ATTR.put("total","select distinct(p.total) from pedido p");
-        QUERY_ATTR.put("cantidad","select distinct(i.cantidad) from items i");
-        QUERY_ATTR.put("product_id","select distinct(i.product_id) from items i");
-    }
 
     @Override
     public ArrayList<Pedido> getAll() {
@@ -49,10 +39,50 @@ public class PedidoDAO implements DAO<Pedido> {
 
     @Override
     public Pedido save(Pedido data) {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = null;
+            try {
+                // Comenzar la transacción
+                transaction = session.beginTransaction();
+
+                // Guardar el nuevo pedido en la base de datos
+                session.save(data);
+
+                // Commit de la transacción
+                transaction.commit();
+            } catch (Exception e) {
+                // Manejar cualquier excepción que pueda ocurrir durante la transacción
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            }
+            return data;
+        }
     }
 
+    @Override
+    public void update(Pedido data) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = null;
 
+            try {
+                transaction = session.beginTransaction();
+
+                // Actualizar el pedido en la base de datos
+                session.update(data);
+
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+                // Manejo de errores, por ejemplo, lanzar una excepción personalizada
+                throw new RuntimeException("Error al actualizar el pedido en la base de datos", e);
+            }
+        }
+    }
 
     @Override
     public void delete(Pedido data) {
@@ -63,15 +93,26 @@ public class PedidoDAO implements DAO<Pedido> {
 
     }
 
-    public List<String> getDistinctFromAttribute(String attr){
-        ArrayList<String> results = new ArrayList<>(0);
-
-        try(Session s = HibernateUtil.getSessionFactory().openSession()){
-            Query<String> q = s.createQuery(QUERY_ATTR.get(attr), String.class);
-            results = (ArrayList<String>) q.getResultList();
+    public String getUltimoCodigoPedido() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<String> query = session.createQuery("select max(p.codigo) from Pedido p", String.class);
+            String ultimoCodigo = query.uniqueResult();
+            if (ultimoCodigo == null) {
+                // No hay códigos anteriores, inicia desde PED-001
+                return "PED-001";
+            } else {
+                int ultimoNumero = Integer.parseInt(ultimoCodigo.substring(4));
+                int nuevoNumero = ultimoNumero + 1;
+                return "PED-" + String.format("%03d", nuevoNumero);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejo de errores
+            throw new RuntimeException("Error al generar el código de pedido", e);
         }
-        return results;
     }
 
 }
+
+
 

@@ -19,10 +19,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 
 public class VentanaDatosController implements Initializable {
     @FXML
@@ -37,6 +37,13 @@ public class VentanaDatosController implements Initializable {
     private TableColumn<Item, String> columproduct;
     @FXML
     private Button volver;
+    @FXML
+    private Button btnItem;
+
+    @FXML
+    private Button btnborrarItem;
+    @FXML
+    private Button eliminarPedido;
 
 
     @Override
@@ -70,5 +77,18 @@ public class VentanaDatosController implements Initializable {
   @FXML
     public void btnvolverVP(ActionEvent actionEvent) {
         App.ventanaDatos("Views/ventanaPrincipal.fxml");
+    }
+
+    @FXML
+    public void añadirItem(ActionEvent actionEvent) {
+        App.ventanaDatos("Views/ventana_edit_pedido.fxml");
+    }
+
+    @FXML
+    public void borrarItem(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    public void deletePedido(ActionEvent actionEvent) {
     }
 }

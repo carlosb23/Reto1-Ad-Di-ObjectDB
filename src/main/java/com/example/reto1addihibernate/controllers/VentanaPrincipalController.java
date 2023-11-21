@@ -4,8 +4,11 @@ package com.example.reto1addihibernate.controllers;
 import com.example.reto1addihibernate.App;
 import com.example.reto1addihibernate.SessionData;
 import com.example.reto1addihibernate.domain.Items.Item;
+import com.example.reto1addihibernate.domain.Items.ItemDAO;
 import com.example.reto1addihibernate.domain.pedido.Pedido;
 import com.example.reto1addihibernate.domain.pedido.PedidoDAO;
+import com.example.reto1addihibernate.domain.productos.ProductoDAO;
+import com.example.reto1addihibernate.domain.usuario.Usuario;
 import com.example.reto1addihibernate.domain.usuario.UsuarioDAO;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleLongProperty;
@@ -18,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -27,6 +31,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -64,6 +69,13 @@ public class VentanaPrincipalController implements Initializable {
     private Label NPedidos;
     @javafx.fxml.FXML
     private Button btnañadir;
+
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
+    private final ProductoDAO productoDAO = new ProductoDAO();
+    private final ItemDAO itemDAO = new ItemDAO();
+    ObservableList<Pedido> observableListPedidos = FXCollections.observableArrayList();
+    @javafx.fxml.FXML
+    private Label info;
 
 
     @Override
@@ -114,6 +126,8 @@ public class VentanaPrincipalController implements Initializable {
 
         SessionData.setCurrentUser((new UsuarioDAO().get(SessionData.getCurrentUser().getId())));
         tablaproduct.getItems().addAll(SessionData.getCurrentUser().getPedido());
+
+
     }
 
 
@@ -132,13 +146,19 @@ public class VentanaPrincipalController implements Initializable {
 
     @javafx.fxml.FXML
     public void newOrder(ActionEvent actionEvent) {
-        var p = new Pedido();
-        p.setUsuario(SessionData.getCurrentUser());
-        p.setFecha(new Date());
-        SessionData.setCurrentPedido(p);
+        Pedido nuevoPedido = new Pedido();
+        nuevoPedido.setCodigo(pedidoDAO.getUltimoCodigoPedido());
+        nuevoPedido.setFecha(new Date());
+        nuevoPedido.setUsuario(SessionData.getCurrentUser());
+        nuevoPedido.setItems(new ArrayList<>());
 
-        App.ventanaeditPedidos("Views/ventana_edit_pedido.fxml");
+        // Siempre establece el total a 0 al inicio
+        nuevoPedido.setTotal(0.0);
 
+        observableListPedidos.add(nuevoPedido);
+        tablaproduct.setItems(observableListPedidos);
 
+        SessionData.setCurrentPedido((new PedidoDAO()).save(nuevoPedido));
     }
+
 }

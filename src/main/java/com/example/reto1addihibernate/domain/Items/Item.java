@@ -21,7 +21,7 @@ public class Item implements Serializable {
     /*@Column(name="codigo")
     private String codigo;*/
 
-    @Column(name="cantidad")
+    @Column(name = "cantidad")
     private int cantidad;
 
     @OneToOne
@@ -37,8 +37,10 @@ public class Item implements Serializable {
         return "Item{" +
                 "id=" + id +
                 ", cantidad=" + cantidad +
-                ", producto=" + producto +
+                ", producto=" + producto.getNombre() +
                 ", codigo=" + codigo +
                 '}';
     }
 }
+
+

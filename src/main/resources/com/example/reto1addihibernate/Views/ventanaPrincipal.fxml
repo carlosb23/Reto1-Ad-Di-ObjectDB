@@ -36,7 +36,7 @@
    <center>
       <BorderPane prefHeight="404.0" prefWidth="914.0" BorderPane.alignment="CENTER">
          <left>
-            <VBox prefHeight="671.0" prefWidth="282.0" styleClass="vbox" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
+            <VBox prefHeight="579.0" prefWidth="282.0" styleClass="vbox" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Listado de Pedidos" underline="true" wrappingWidth="236.13671875">
                      <font>
@@ -118,6 +118,11 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Label fx:id="info">
+                     <VBox.margin>
+                        <Insets left="125.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
                </children>
                <BorderPane.margin>
                   <Insets />

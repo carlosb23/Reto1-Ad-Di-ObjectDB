@@ -33,7 +33,7 @@ public class Pedido implements Serializable {
     private Integer usuario;*/
 
     @Column(name="total")
-    private Integer total;
+    private Double total;
 
     @ManyToOne
     @JoinColumn(name = "usuario", referencedColumnName = "id")

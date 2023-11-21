@@ -24,28 +24,53 @@
          </columnResizePolicy>
       </TableView>
    </center>
-   <top>
-      <Button fx:id="volver" alignment="CENTER" mnemonicParsing="false" onAction="#btnvolverVP" prefHeight="34.0" prefWidth="123.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Volver" textFill="#111111" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="700.0" top="10.0" />
-         </BorderPane.margin>
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Img/user.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-   </top>
    <bottom>
       <FlowPane alignment="CENTER" hgap="20.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="20.0" top="20.0" />
          </BorderPane.margin>
+         <children>
+            <Button fx:id="btnItem" mnemonicParsing="false" onAction="#añadirItem" prefHeight="37.0" prefWidth="122.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Añadir Item">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnborrarItem" mnemonicParsing="false" onAction="#borrarItem" prefHeight="37.0" prefWidth="122.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Borrar Item" textFill="#ff0606">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
       </FlowPane>
    </bottom>
+   <top>
+      <FlowPane hgap="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="volver" alignment="CENTER" mnemonicParsing="false" onAction="#btnvolverVP" prefHeight="34.0" prefWidth="123.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Volver" textFill="#111111">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Img/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="eliminarPedido" mnemonicParsing="false" onAction="#deletePedido" prefHeight="34.0" prefWidth="38.0" style="-fx-background-color: transparent;" stylesheets="@../../../../style.css">
+               <graphic>
+                  <ImageView fitHeight="47.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/borrarPedido.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </FlowPane>
+   </top>
 </BorderPane>
