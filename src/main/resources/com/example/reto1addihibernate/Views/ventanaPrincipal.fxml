@@ -118,6 +118,18 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Button fx:id="btndeletePedido" mnemonicParsing="false" onAction="#deletePedido" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="47.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/borrarPedido.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets left="105.0" top="15.0" />
+                     </VBox.margin>
+                  </Button>
                   <Label fx:id="info">
                      <VBox.margin>
                         <Insets left="125.0" top="20.0" />

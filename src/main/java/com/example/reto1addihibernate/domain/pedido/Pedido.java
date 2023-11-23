@@ -42,9 +42,6 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "codigo", fetch = FetchType.EAGER)
     private List<Item> items = new ArrayList<>();
 
-
-
-
     public Pedido() {
     }
 

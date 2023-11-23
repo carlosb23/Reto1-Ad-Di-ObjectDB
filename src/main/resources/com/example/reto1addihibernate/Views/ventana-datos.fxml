@@ -58,15 +58,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="eliminarPedido" mnemonicParsing="false" onAction="#deletePedido" prefHeight="34.0" prefWidth="38.0" style="-fx-background-color: transparent;" stylesheets="@../../../../style.css">
-               <graphic>
-                  <ImageView fitHeight="47.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/borrarPedido.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
          </children>
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

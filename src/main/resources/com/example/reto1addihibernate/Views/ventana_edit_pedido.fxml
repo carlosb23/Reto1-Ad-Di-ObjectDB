@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="503.0" prefWidth="735.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto1addihibernate.controllers.VentPedidoEdit">
+<BorderPane prefHeight="458.0" prefWidth="735.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto1addihibernate.controllers.VentPedidoEdit">
    <center>
-      <VBox prefHeight="365.0" prefWidth="735.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="356.0" prefWidth="735.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="Npedido" alignment="CENTER" contentDisplay="CENTER" text="Label" textAlignment="CENTER">
                <VBox.margin>
@@ -79,17 +79,18 @@
                </VBox.margin>
             </GridPane>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
    </center>
    <bottom>
       <FlowPane alignment="CENTER" hgap="20.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets bottom="50.0" />
+            <Insets bottom="80.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="btneliminar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eliminar" prefHeight="32.0" prefWidth="71.0" text="Eliminar" textAlignment="CENTER" textFill="#e34949db" />
-            <Button fx:id="btnguardar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#guardar" prefHeight="32.0" prefWidth="71.0" text="Guardar" textAlignment="CENTER" />
-            <Button fx:id="btnvolver" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnvolverVP" prefHeight="32.0" prefWidth="71.0" text="Volver" textAlignment="CENTER" />
+            <Button fx:id="btnguardar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#guardar" prefHeight="34.0" prefWidth="86.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Guardar" textAlignment="CENTER" />
          </children>
       </FlowPane>
    </bottom>

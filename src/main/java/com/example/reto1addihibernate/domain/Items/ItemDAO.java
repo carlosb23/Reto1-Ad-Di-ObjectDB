@@ -80,6 +80,24 @@ public class ItemDAO implements DAO<Item> {
 
     @Override
     public void delete(Item data) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
 
+            try {
+                // Antes de eliminar el item, asegúrate de que esté gestionado por la sesión actual
+                Item itemToDelete = session.get(Item.class, data.getId());
+
+                // Elimina el item
+                session.delete(itemToDelete);
+
+                transaction.commit();
+            } catch (Exception e) {
+                // En caso de error, realiza un rollback
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            }
+        }
     }
 }

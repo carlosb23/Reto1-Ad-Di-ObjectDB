@@ -3,6 +3,7 @@ package com.example.reto1addihibernate.domain.pedido;
 import com.example.reto1addihibernate.domain.DAO;
 import com.example.reto1addihibernate.domain.HibernateUtil;
 import com.example.reto1addihibernate.SessionData;
+import com.example.reto1addihibernate.domain.usuario.Usuario;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -112,6 +113,17 @@ public class PedidoDAO implements DAO<Pedido> {
         }
     }
 
+    public double getTotalPedidos(Usuario usuario) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Double> query = session.createQuery("select sum(p.total) from Pedido p where p.usuario = :usuario", Double.class);
+            query.setParameter("usuario", usuario);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejo de errores
+            throw new RuntimeException("Error al obtener el total de los pedidos", e);
+        }
+    }
 }
 
 

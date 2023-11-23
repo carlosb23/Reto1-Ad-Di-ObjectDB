@@ -29,11 +29,7 @@ public class VentPedidoEdit {
     @javafx.fxml.FXML
     private Button volver;
     @javafx.fxml.FXML
-    private Button btneliminar;
-    @javafx.fxml.FXML
     private Button btnguardar;
-    @javafx.fxml.FXML
-    private Button btnvolver;
     @javafx.fxml.FXML
     private ComboBox<Producto> comboProduct;
     @javafx.fxml.FXML
@@ -58,22 +54,6 @@ public class VentPedidoEdit {
     }
 
     @javafx.fxml.FXML
-    public void eliminar(ActionEvent actionEvent) {
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Desea borrar " + SessionData.getCurrentPedido().getCodigo() + "de la tabla pedidos");
-        var result = alert.showAndWait().get();
-
-        if (result.getButtonData()==ButtonBar.ButtonData.OK_DONE){
-            pedidoDAO.delete(SessionData.getCurrentPedido());
-            btnvolverVP(null);
-        }
-
-    }
-
-
-
-    @javafx.fxml.FXML
     public void guardar(ActionEvent actionEvent) {
 
         Pedido pedido = SessionData.getCurrentPedido();
@@ -87,9 +67,21 @@ public class VentPedidoEdit {
             SessionData.setCurrentItem((new ItemDAO().save(item)));
             SessionData.setCurrentItem(item);
 
+            double total = calcularTotal();
+            SessionData.getCurrentPedido().setTotal(total);
+            pedidoDAO.update(SessionData.getCurrentPedido());
+
             // Volver a la ventana de datos u otra lógica según tus necesidades
             App.ventanaDatos("Views/ventana-datos.fxml");
         }
+    }
+
+    private double calcularTotal() {
+        double total = 0.0;
+        for (Item item : SessionData.getCurrentPedido().getItems()) {
+            total += item.getCantidad() * item.getProducto().getPrecio();
+        }
+        return total;
     }
 
 }

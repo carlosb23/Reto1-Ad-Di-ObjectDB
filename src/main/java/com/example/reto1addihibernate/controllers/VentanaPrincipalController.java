@@ -11,6 +11,8 @@ import com.example.reto1addihibernate.domain.productos.ProductoDAO;
 import com.example.reto1addihibernate.domain.usuario.Usuario;
 import com.example.reto1addihibernate.domain.usuario.UsuarioDAO;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -76,6 +78,8 @@ public class VentanaPrincipalController implements Initializable {
     ObservableList<Pedido> observableListPedidos = FXCollections.observableArrayList();
     @javafx.fxml.FXML
     private Label info;
+    @javafx.fxml.FXML
+    private Button btndeletePedido;
 
 
     @Override
@@ -113,11 +117,12 @@ public class VentanaPrincipalController implements Initializable {
             return new SimpleStringProperty(total);
         });
 
-        tablaproduct.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pedido>() {
-            @Override
-            public void changed(ObservableValue<? extends Pedido> observableValue, Pedido pedido, Pedido t1) {
-                if (t1 != null) {
-                    Pedido pedidoclick = tablaproduct.getSelectionModel().getSelectedItem();
+        tablaproduct.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                // Doble clic detectado
+
+                Pedido pedidoclick = tablaproduct.getSelectionModel().getSelectedItem();
+                if (pedidoclick != null) {
                     SessionData.setCurrentPedido(pedidoclick);
                     App.ventanaDatos("Views/ventana-datos.fxml");
                 }
@@ -127,9 +132,11 @@ public class VentanaPrincipalController implements Initializable {
         SessionData.setCurrentUser((new UsuarioDAO().get(SessionData.getCurrentUser().getId())));
         tablaproduct.getItems().addAll(SessionData.getCurrentUser().getPedido());
 
+        double total = pedidoDAO.getTotalPedidos(SessionData.getCurrentUser());
+        columTotal.setText(String.valueOf(total));
+        columTotal.setText("TOTAL");
 
     }
-
 
 
     @javafx.fxml.FXML
@@ -159,6 +166,43 @@ public class VentanaPrincipalController implements Initializable {
         tablaproduct.setItems(observableListPedidos);
 
         SessionData.setCurrentPedido((new PedidoDAO()).save(nuevoPedido));
+        SessionData.setCurrentUser((new UsuarioDAO().get(SessionData.getCurrentUser().getId())));
     }
 
+    @javafx.fxml.FXML
+    public void deletePedido(ActionEvent actionEvent) {
+        Pedido pedidoSeleccionado = tablaproduct.getSelectionModel().getSelectedItem();
+
+        if (pedidoSeleccionado != null) {
+            // Verificar si el pedido tiene items
+            if (!pedidoSeleccionado.getItems().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("El pedido que intentas eliminar tiene items, porfavor vacie el pedido");
+                alert.showAndWait();
+                return;  // Salir del método si el pedido tiene items
+            }
+
+            // Mostrar confirmación antes de eliminar
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("¿Está seguro de que desea eliminar este pedido?");
+            var result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+            if (result.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                // Eliminar pedido de la base de datos
+                pedidoDAO.delete(pedidoSeleccionado);
+
+                // Eliminar pedido de la tabla
+                tablaproduct.getItems().remove(pedidoSeleccionado);
+
+                // Opcional: Limpiar la selección en la tabla
+                tablaproduct.getSelectionModel().clearSelection();
+            }
+        } else {
+            // Manejar el caso en que no hay un pedido seleccionado
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Por favor, seleccione un pedido para borrar.");
+            alert.showAndWait();
+        }
+
+    }
 }

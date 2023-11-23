@@ -1,6 +1,7 @@
 package com.example.reto1addihibernate.controllers;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -16,9 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
@@ -42,8 +41,9 @@ public class VentanaDatosController implements Initializable {
 
     @FXML
     private Button btnborrarItem;
-    @FXML
-    private Button eliminarPedido;
+
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
+    private final ItemDAO itemDao = new ItemDAO();
 
 
     @Override
@@ -71,10 +71,15 @@ public class VentanaDatosController implements Initializable {
         SessionData.setCurrentPedido((new PedidoDAO().get(SessionData.getCurrentPedido().getId())));
         tabledato.getItems().addAll(SessionData.getCurrentPedido().getItems());
 
+
+
+
     }
 
 
-  @FXML
+
+
+    @FXML
     public void btnvolverVP(ActionEvent actionEvent) {
         App.ventanaDatos("Views/ventanaPrincipal.fxml");
     }
@@ -84,11 +89,42 @@ public class VentanaDatosController implements Initializable {
         App.ventanaDatos("Views/ventana_edit_pedido.fxml");
     }
 
+    private double calcularTotal() {
+        double total = 0.0;
+        for (Item item : SessionData.getCurrentPedido().getItems()) {
+            total += item.getCantidad() * item.getProducto().getPrecio();
+        }
+        return total;
+    }
     @FXML
     public void borrarItem(ActionEvent actionEvent) {
+        // Obtener el item seleccionado en la tabla (asumiendo que estás mostrando items en una tabla)
+        Item itemSeleccionado = (Item) tabledato.getSelectionModel().getSelectedItem();
+
+        if (itemSeleccionado != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Desea borrar el item seleccionado?");
+            var result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+            if (result.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                tabledato.getItems().remove(itemSeleccionado);
+                itemDao.delete(itemSeleccionado);
+
+                // Actualizar el pedido actual para reflejar el cambio en la base de datos
+                Pedido pedidoActual = SessionData.getCurrentPedido();
+                pedidoActual.getItems().remove(itemSeleccionado);
+
+                double total = calcularTotal();
+                SessionData.getCurrentPedido().setTotal(total);
+                pedidoDAO.update(SessionData.getCurrentPedido());
+            }
+        } else {
+            // Manejar el caso en que no hay un item seleccionado
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Por favor, seleccione un item para borrar.");
+            alert.showAndWait();
+        }
+
     }
 
-    @FXML
-    public void deletePedido(ActionEvent actionEvent) {
-    }
 }
