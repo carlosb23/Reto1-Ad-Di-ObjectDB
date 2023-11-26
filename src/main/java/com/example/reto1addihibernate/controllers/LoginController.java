@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,7 +40,16 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        /*
+         * Esta mejora permite que al presionar la tecla 'Enter' en el campo de contraseña,
+         * se simule el clic en el botón de inicio de sesión.
+         */
+        txtPassword.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                // Simular el clic en el botón de inicio de sesión
+                btnacceder.fire();
+            }
+        });
     }
 
     /**
