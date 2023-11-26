@@ -15,7 +15,11 @@ import java.util.ArrayList;
  */
 public class ItemDAO implements DAO<Item> {
 
-
+    /**
+     * Obtiene todos los elementos (items) de la base de datos.
+     *
+     * @return Una lista de todos los elementos.
+     */
     @Override
     public ArrayList<Item> getAll() {
         var salida = new ArrayList<Item>(0);
@@ -26,11 +30,23 @@ public class ItemDAO implements DAO<Item> {
         return salida;
     }
 
+    /**
+     * Obtiene un elemento (item) por su identificador único.
+     *
+     * @param id El identificador único del elemento.
+     * @return El elemento correspondiente al identificador o null si no se encuentra.
+     */
     @Override
     public Item get(Long id) {
         return null;
     }
 
+    /**
+     * Guarda un nuevo elemento (item) en la base de datos.
+     *
+     * @param data El elemento a guardar.
+     * @return El elemento guardado.
+     */
     @Override
     public Item save(Item data) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -55,6 +71,11 @@ public class ItemDAO implements DAO<Item> {
         }
     }
 
+    /**
+     * Actualiza un elemento (item) en la base de datos.
+     *
+     * @param data El elemento a actualizar.
+     */
     @Override
     public void update(Item data) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -78,6 +99,11 @@ public class ItemDAO implements DAO<Item> {
         }
     }
 
+    /**
+     * Elimina un elemento (item) de la base de datos.
+     *
+     * @param data El elemento a eliminar.
+     */
     @Override
     public void delete(Item data) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

@@ -16,6 +16,9 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controlador para la ventana de edición de pedidos.
+ */
 public class VentPedidoEdit {
 
     private final PedidoDAO pedidoDAO = new PedidoDAO();
@@ -37,7 +40,9 @@ public class VentPedidoEdit {
     @javafx.fxml.FXML
     private Label labelTotal;
 
-
+    /**
+     * Inicializa el controlador de la ventana de edición de pedidos.
+     */
     @javafx.fxml.FXML
     public void initialize() {
         listProduct = FXCollections.observableArrayList();
@@ -48,11 +53,21 @@ public class VentPedidoEdit {
 
     }
 
+    /**
+     * Maneja el evento de volver a la ventana principal.
+     *
+     * @param actionEvent El evento de acción asociado al botón de volver.
+     */
     @javafx.fxml.FXML
     public void btnvolverVP(ActionEvent actionEvent) {
         App.ventanaPrincipal("Views/ventanaPrincipal.fxml","");
     }
 
+    /**
+     * Maneja el evento de guardar los cambios en el pedido.
+     *
+     * @param actionEvent El evento de acción asociado al botón de guardar.
+     */
     @javafx.fxml.FXML
     public void guardar(ActionEvent actionEvent) {
 
@@ -76,6 +91,11 @@ public class VentPedidoEdit {
         }
     }
 
+    /**
+     * Calcula y devuelve el total del pedido.
+     *
+     * @return El total del pedido.
+     */
     private double calcularTotal() {
         double total = 0.0;
         for (Item item : SessionData.getCurrentPedido().getItems()) {

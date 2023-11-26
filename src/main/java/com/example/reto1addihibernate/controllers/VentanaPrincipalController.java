@@ -1,6 +1,5 @@
 package com.example.reto1addihibernate.controllers;
 
-
 import com.example.reto1addihibernate.App;
 import com.example.reto1addihibernate.SessionData;
 import com.example.reto1addihibernate.domain.Items.Item;
@@ -38,7 +37,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controlador para la ventana principal de la aplicación.
+ */
 public class VentanaPrincipalController implements Initializable {
 
     private final PedidoDAO gameDao = new PedidoDAO();
@@ -81,24 +82,28 @@ public class VentanaPrincipalController implements Initializable {
     @javafx.fxml.FXML
     private Button btndeletePedido;
 
-
+    /**
+     * Inicializa el controlador de la ventana principal.
+     *
+     * @param url             La ubicación relativa del objeto a inicializar.
+     * @param resourceBundle El recurso de mensajes para esta interfaz.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         nomuser.setText(SessionData.getCurrentUser().getUsername());
         emailuser.setText(SessionData.getCurrentUser().getEmail());
-        NPedidos.setText(SessionData.getCurrentUser().getCantidapedidos()+ " pedidos");
+        NPedidos.setText(SessionData.getCurrentUser().getCantidapedidos() + " pedidos");
 
-        idColumn.setCellValueFactory((column)->{
+        idColumn.setCellValueFactory((column) -> {
             String id = String.valueOf(column.getValue().getId());
             return new SimpleStringProperty(id);
         });
-        columcodigo.setCellValueFactory((column)->{
+        columcodigo.setCellValueFactory((column) -> {
             String codigo = String.valueOf(column.getValue().getCodigo());
             return new SimpleStringProperty(codigo);
         });
-        columnFecha.setCellValueFactory((column)->{
-            Date fecha = column.getValue().getFecha(); // Suponiendo que getFecha() devuelve un LocalDate
+        columnFecha.setCellValueFactory((column) -> {
+            Date fecha = column.getValue().getFecha();
             String fechaFormateada = "";
 
             if (fecha != null) {
@@ -108,19 +113,17 @@ public class VentanaPrincipalController implements Initializable {
 
             return new SimpleStringProperty(fechaFormateada);
         });
-        columnuser.setCellValueFactory((column)->{
+        columnuser.setCellValueFactory((column) -> {
             String user = String.valueOf(column.getValue().getUsuario().getId());
             return new SimpleStringProperty(user);
         });
-        columTotal.setCellValueFactory((column)->{
+        columTotal.setCellValueFactory((column) -> {
             String total = String.valueOf(column.getValue().getTotal());
             return new SimpleStringProperty(total);
         });
 
         tablaproduct.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                // Doble clic detectado
-
                 Pedido pedidoclick = tablaproduct.getSelectionModel().getSelectedItem();
                 if (pedidoclick != null) {
                     SessionData.setCurrentPedido(pedidoclick);
@@ -135,22 +138,35 @@ public class VentanaPrincipalController implements Initializable {
         double total = pedidoDAO.getTotalPedidos(SessionData.getCurrentUser());
         columTotal.setText(String.valueOf(total));
         columTotal.setText("TOTAL");
-
     }
 
-
+    /**
+     * Maneja el evento de cerrar sesión.
+     *
+     * @param actionEvent El evento de acción asociado al botón de cerrar sesión.
+     */
     @javafx.fxml.FXML
     public void logout(ActionEvent actionEvent) {
         App.ventanaPrincipal("Views/login-view.fxml", "Tabla de pedidos");
         App.myStage.setTitle("Login");
     }
 
+    /**
+     * Maneja el evento de salir de la aplicación.
+     *
+     * @param actionEvent El evento de acción asociado al botón de salir.
+     */
     @javafx.fxml.FXML
     public void exit(ActionEvent actionEvent) {
         Stage stage = (Stage) btnsalir.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Maneja el evento de crear un nuevo pedido.
+     *
+     * @param actionEvent El evento de acción asociado al botón de añadir nuevo pedido.
+     */
     @javafx.fxml.FXML
     public void newOrder(ActionEvent actionEvent) {
         Pedido nuevoPedido = new Pedido();
@@ -158,8 +174,6 @@ public class VentanaPrincipalController implements Initializable {
         nuevoPedido.setFecha(new Date());
         nuevoPedido.setUsuario(SessionData.getCurrentUser());
         nuevoPedido.setItems(new ArrayList<>());
-
-        // Siempre establece el total a 0 al inicio
         nuevoPedido.setTotal(0.0);
 
         observableListPedidos.add(nuevoPedido);
@@ -169,19 +183,16 @@ public class VentanaPrincipalController implements Initializable {
         SessionData.setCurrentUser((new UsuarioDAO().get(SessionData.getCurrentUser().getId())));
     }
 
+    /**
+     * Maneja el evento de eliminar un pedido.
+     *
+     * @param actionEvent El evento de acción asociado al botón de eliminar pedido.
+     */
     @javafx.fxml.FXML
     public void deletePedido(ActionEvent actionEvent) {
         Pedido pedidoSeleccionado = tablaproduct.getSelectionModel().getSelectedItem();
 
         if (pedidoSeleccionado != null) {
-            // Verificar si el pedido tiene items
-            if (!pedidoSeleccionado.getItems().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("El pedido que intentas eliminar tiene items, porfavor vacie el pedido");
-                alert.showAndWait();
-                return;  // Salir del método si el pedido tiene items
-            }
-
             // Mostrar confirmación antes de eliminar
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("¿Está seguro de que desea eliminar este pedido?");
@@ -190,6 +201,9 @@ public class VentanaPrincipalController implements Initializable {
             if (result.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                 // Eliminar pedido de la base de datos
                 pedidoDAO.delete(pedidoSeleccionado);
+
+                // Opcional: Eliminar items asociados al pedido (comentar o descomentar según necesidades)
+                // itemDao.deleteByPedido(pedidoSeleccionado);
 
                 // Eliminar pedido de la tabla
                 tablaproduct.getItems().remove(pedidoSeleccionado);

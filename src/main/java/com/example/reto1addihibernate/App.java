@@ -1,5 +1,6 @@
 package com.example.reto1addihibernate;
 
+import com.example.reto1addihibernate.domain.usuario.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -46,11 +47,13 @@ public class App extends Application {
         }
     }
 
-    public static void ventanaeditPedidos(String fxml){
+
+    public static void ventananewpass(String fxml){
         try{
+
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
             Scene scene = new Scene(fxmlLoader.load());
-            myStage.setTitle("Ventana editar Pedidos");
+            myStage.setTitle("Ventana cambio contraseña");
             myStage.setScene(scene);
             myStage.show();
         } catch (IOException e) {

@@ -1,6 +1,5 @@
 package com.example.reto1addihibernate.domain.pedido;
 
-
 import com.example.reto1addihibernate.domain.Items.Item;
 import com.example.reto1addihibernate.domain.usuario.Usuario;
 import jakarta.persistence.*;
@@ -16,35 +15,58 @@ import java.util.List;
  */
 @Data
 @Entity
-@Table(name="pedido")
+@Table(name = "pedido")
 public class Pedido implements Serializable {
 
+    /**
+     * Identificador único del pedido.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="codigo_pedido")
+    /**
+     * Código único del pedido.
+     */
+    @Column(name = "codigo_pedido")
     private String codigo;
 
-    @Column(name="fecha")
+    /**
+     * Fecha en que se realizó el pedido.
+     */
+    @Column(name = "fecha")
     private Date fecha;
 
-    /*@Column(name="usuario")
-    private Integer usuario;*/
-
-    @Column(name="total")
+    /**
+     * Total del pedido.
+     */
+    @Column(name = "total")
     private Double total;
 
+    /**
+     * Usuario asociado al pedido.
+     */
     @ManyToOne
     @JoinColumn(name = "usuario", referencedColumnName = "id")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "codigo", fetch = FetchType.EAGER)
+    /**
+     * Lista de items asociados al pedido.
+     */
+    @OneToMany(mappedBy = "codigo", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items = new ArrayList<>();
 
+    /**
+     * Constructor por defecto de la clase Pedido.
+     */
     public Pedido() {
     }
 
+    /**
+     * Representación de cadena del objeto Pedido.
+     *
+     * @return Cadena que representa el objeto Pedido.
+     */
     @Override
     public String toString() {
         return "Pedido{" +

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxWidth="450.0" prefHeight="568.0" prefWidth="361.0" styleClass="login" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto1addihibernate.controllers.LoginController">
+<BorderPane maxWidth="450.0" prefHeight="610.0" prefWidth="432.0" styleClass="login" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto1addihibernate.controllers.LoginController">
    <center>
       <VBox alignment="CENTER" maxHeight="568.0" maxWidth="390.0" prefHeight="568.0" prefWidth="370.0" spacing="20.0" styleClass="Vboxlogin" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
          <ImageView fitHeight="90.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
