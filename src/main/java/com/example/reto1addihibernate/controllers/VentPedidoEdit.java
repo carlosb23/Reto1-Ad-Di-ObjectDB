@@ -82,8 +82,9 @@ public class VentPedidoEdit {
             SessionData.setCurrentItem((new ItemDAO().save(item)));
             SessionData.setCurrentItem(item);
 
-            double total = calcularTotal();
+            double total = calcularTotal() + (item.getCantidad() * item.getProducto().getPrecio());
             SessionData.getCurrentPedido().setTotal(total);
+
             pedidoDAO.update(SessionData.getCurrentPedido());
 
             // Volver a la ventana de datos u otra lógica según tus necesidades

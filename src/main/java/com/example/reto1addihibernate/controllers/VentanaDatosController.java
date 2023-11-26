@@ -97,7 +97,8 @@ public class VentanaDatosController implements Initializable {
      *
      * @return El total del pedido.
      */
-    private double calcularTotal() {
+    private double
+    calcularTotal() {
         double total = 0.0;
         for (Item item : SessionData.getCurrentPedido().getItems()) {
             total += item.getCantidad() * item.getProducto().getPrecio();
