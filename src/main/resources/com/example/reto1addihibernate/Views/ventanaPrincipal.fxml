@@ -59,7 +59,7 @@
                         <Insets left="90.0" top="50.0" />
                      </VBox.margin>
                      <image>
-                        <Image url="@../Img/user.png" />
+                        <Image url="@../img/user.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="nomuser" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="74.0" textAlignment="CENTER">

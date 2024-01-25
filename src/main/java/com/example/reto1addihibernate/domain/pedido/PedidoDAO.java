@@ -128,7 +128,7 @@ public class PedidoDAO implements DAO<Pedido> {
      */
     public String getUltimoCodigoPedido() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<String> query = session.createQuery("select max(p.codigo) from Pedido p", String.class);
+            Query<String> query = session.createQuery("select max(p.codigo_pedido) from Pedido p", String.class);
             String ultimoCodigo = query.uniqueResult();
             if (ultimoCodigo == null) {
                 // No hay códigos anteriores, inicia desde PED-001
