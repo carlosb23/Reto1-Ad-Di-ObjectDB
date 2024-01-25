@@ -27,8 +27,8 @@ public class Producto implements Serializable {
     /**
      * Nombre del producto.
      */
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "nombre_producto")
+    private String nombre_producto;
 
     /**
      * Precio del producto.
@@ -51,7 +51,7 @@ public class Producto implements Serializable {
     public String toString() {
         return "Producto{" +
                 "id=" + id +
-                ", nombre='" + nombre + '\'' +
+                ", nombre='" + nombre_producto + '\'' +
                 ", precio=" + precio +
                 ", cantidad=" + cantidad +
                 '}';

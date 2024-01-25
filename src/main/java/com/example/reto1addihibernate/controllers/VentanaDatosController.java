@@ -14,8 +14,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -39,9 +45,9 @@ public class VentanaDatosController implements Initializable {
     private Button btnItem;
     @FXML
     private Button btnborrarItem;
-
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final ItemDAO itemDao = new ItemDAO();
+
 
     /**
      * Inicializa el controlador de la ventana de visualización de datos de un pedido.
@@ -56,7 +62,7 @@ public class VentanaDatosController implements Initializable {
             return new SimpleStringProperty(id);
         });
         columcodigo.setCellValueFactory((fila) -> {
-            String codigo = String.valueOf(fila.getValue().getCodigo().getCodigo());
+            String codigo = String.valueOf(fila.getValue().getCodigo().getCodigo_pedido());
             return new SimpleStringProperty(codigo);
         });
         columcantidad.setCellValueFactory((fila) -> {
@@ -64,7 +70,7 @@ public class VentanaDatosController implements Initializable {
             return new SimpleStringProperty(cantidad);
         });
         columproduct.setCellValueFactory((fila) -> {
-            String product = String.valueOf(fila.getValue().getProducto());
+            String product = String.valueOf(fila.getValue().getProducto().getNombre_producto());
             return new SimpleStringProperty(product);
         });
 

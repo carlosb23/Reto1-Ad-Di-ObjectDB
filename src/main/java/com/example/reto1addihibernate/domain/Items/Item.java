@@ -52,7 +52,7 @@ public class Item implements Serializable {
         return "Item{" +
                 "id=" + id +
                 ", cantidad=" + cantidad +
-                ", producto=" + producto.getNombre() +
+                ", producto=" + producto.getNombre_producto() +
                 ", codigo=" + codigo +
                 '}';
     }

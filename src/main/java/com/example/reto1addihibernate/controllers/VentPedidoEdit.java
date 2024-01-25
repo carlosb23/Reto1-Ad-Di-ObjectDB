@@ -46,7 +46,7 @@ public class VentPedidoEdit {
     @javafx.fxml.FXML
     public void initialize() {
         listProduct = FXCollections.observableArrayList();
-        Npedido.setText(SessionData.getCurrentPedido().getCodigo());
+        Npedido.setText(SessionData.getCurrentPedido().getCodigo_pedido());
         spinnerCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10));
         listProduct.setAll(productoDAO.getAll());
         comboProduct.setItems(listProduct);

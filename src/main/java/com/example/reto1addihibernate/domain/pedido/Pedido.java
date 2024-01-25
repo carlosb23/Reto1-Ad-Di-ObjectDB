@@ -4,6 +4,7 @@ import com.example.reto1addihibernate.domain.Items.Item;
 import com.example.reto1addihibernate.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,8 +29,9 @@ public class Pedido implements Serializable {
     /**
      * Código único del pedido.
      */
+    @Getter
     @Column(name = "codigo_pedido")
-    private String codigo;
+    private String codigo_pedido;
 
     /**
      * Fecha en que se realizó el pedido.
@@ -62,6 +64,10 @@ public class Pedido implements Serializable {
     public Pedido() {
     }
 
+    public void setCodigo_pedido(String codigo_pedido) {
+        this.codigo_pedido = codigo_pedido;
+    }
+
     /**
      * Representación de cadena del objeto Pedido.
      *
@@ -71,7 +77,7 @@ public class Pedido implements Serializable {
     public String toString() {
         return "Pedido{" +
                 "id=" + id +
-                ", codigo='" + codigo + '\'' +
+                ", codigo='" + codigo_pedido + '\'' +
                 ", fecha=" + fecha +
                 ", total=" + total +
                 ", usuario=" + usuario.getId() +

@@ -3,6 +3,7 @@ package com.example.reto1addihibernate.domain.pedido;
 import com.example.reto1addihibernate.domain.DAO;
 import com.example.reto1addihibernate.domain.HibernateUtil;
 import com.example.reto1addihibernate.SessionData;
+import com.example.reto1addihibernate.domain.Items.Item;
 import com.example.reto1addihibernate.domain.usuario.Usuario;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
@@ -10,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 

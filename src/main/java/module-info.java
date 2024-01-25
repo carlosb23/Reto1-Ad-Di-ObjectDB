@@ -6,6 +6,8 @@ module com.example.reto1addihibernate {
     requires jakarta.persistence;
     requires java.naming;
     requires java.sql;
+    requires javafx.swing;
+    requires jasperreports;
 
 
     opens com.example.reto1addihibernate.domain.usuario;
@@ -18,4 +20,6 @@ module com.example.reto1addihibernate {
 
     exports com.example.reto1addihibernate;
     exports com.example.reto1addihibernate.controllers;
+
+
 }

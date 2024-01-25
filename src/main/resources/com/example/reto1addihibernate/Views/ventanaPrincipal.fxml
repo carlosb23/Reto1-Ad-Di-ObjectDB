@@ -107,9 +107,17 @@
                         </Button>
                      </children>
                   </FlowPane>
+                  <Button fx:id="Informe" mnemonicParsing="false" onAction="#vdinforme" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: black;" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Informe" textFill="#ff00e5">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="85.0" top="50.0" />
+                     </VBox.margin>
+                  </Button>
                   <Button fx:id="btnañadir" alignment="CENTER" mnemonicParsing="false" onAction="#newOrder" prefHeight="37.0" prefWidth="169.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Añadir nuevo pedido" textAlignment="CENTER">
                      <VBox.margin>
-                        <Insets left="55.0" top="100.0" />
+                        <Insets left="55.0" top="50.0" />
                      </VBox.margin>
                      <font>
                         <Font name="System Bold" size="15.0" />

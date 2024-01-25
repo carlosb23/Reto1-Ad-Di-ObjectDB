@@ -7,6 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 
 public class App extends Application {
 
@@ -65,5 +70,6 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+
     }
 }
