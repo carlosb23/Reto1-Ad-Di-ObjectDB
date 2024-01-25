@@ -285,11 +285,15 @@ public class VentanaPrincipalController implements Initializable {
                 primaryStage.setScene(scene);
                 primaryStage.show();
 
-                JRPdfExporter exp = new JRPdfExporter();
-                exp.setExporterInput(new SimpleExporterInput(jasperPrint));
-                exp.setExporterOutput(new SimpleOutputStreamExporterOutput("Gestorpedidos.pdf"));
-                exp.setConfiguration(new SimplePdfExporterConfiguration());
-                exp.exportReport();
+                //Nos aseguramos de que cada informe sea unico añadiendo su numero de pedido
+                String nombreArchivoPDF = "GestorPedido_" + pedido + ".pdf";
+
+                // Exporta el informe a un archivo PDF con el nombre único.
+                JRPdfExporter pdf = new JRPdfExporter();
+                pdf.setExporterInput(new SimpleExporterInput(jasperPrint));
+                pdf.setExporterOutput(new SimpleOutputStreamExporterOutput(nombreArchivoPDF));
+                pdf.setConfiguration(new SimplePdfExporterConfiguration());
+                pdf.exportReport();
             } catch (JRException e) {
                 throw new RuntimeException(e);
             }
