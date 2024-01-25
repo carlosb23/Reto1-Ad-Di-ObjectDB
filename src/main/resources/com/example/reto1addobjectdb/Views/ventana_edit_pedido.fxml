@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="458.0" prefWidth="735.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto1addobjectdb.controllers.VentPedidoEdit">
+   <center>
+      <VBox prefHeight="356.0" prefWidth="735.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="Npedido" alignment="CENTER" contentDisplay="CENTER" text="Label" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="340.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri Light" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="volver" alignment="CENTER" maxWidth="132.0" mnemonicParsing="false" onAction="#btnvolverVP" prefHeight="34.0" prefWidth="95.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Volver" textFill="#111111">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="10.0" />
+               </VBox.margin>
+            </Button>
+            <GridPane prefHeight="193.0" prefWidth="695.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <FlowPane alignment="CENTER" hgap="20.0">
+                     <children>
+                        <Label prefHeight="31.0" prefWidth="58.0" text="Producto">
+                           <font>
+                              <Font name="Calibri Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="comboProduct" prefHeight="25.0" prefWidth="235.0" />
+                     </children>
+                  </FlowPane>
+                  <FlowPane alignment="CENTER" hgap="20.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label prefHeight="29.0" prefWidth="53.0" text="Cantidad">
+                           <font>
+                              <Font name="Calibri Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="spinnerCantidad" prefHeight="25.0" prefWidth="233.0" />
+                     </children>
+                  </FlowPane>
+                  <Label fx:id="labelTotal" GridPane.rowIndex="2" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </GridPane>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <FlowPane alignment="CENTER" hgap="20.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="80.0" />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="btnguardar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#guardar" prefHeight="34.0" prefWidth="86.0" styleClass="btnstyle" stylesheets="@../../../../style.css" text="Guardar" textAlignment="CENTER" />
+         </children>
+      </FlowPane>
+   </bottom>
+</BorderPane>

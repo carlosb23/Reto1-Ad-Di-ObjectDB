@@ -1,6 +1,6 @@
 .login{
     -fx-background-position: center;
-    -fx-background-image: url("com/example/reto1addihibernate/img/fondologin.jpg");
+    -fx-background-image: url("com/example/reto1addobjectdb/img/fondologin.jpg");
 }
 .promp{
     -fx-prompt-text-fill: white;
@@ -15,7 +15,7 @@
 }
 
 .vbox{
-    -fx-background-image: url("com/example/reto1addihibernate/img/fondoim.jpg");
+    -fx-background-image: url("com/example/reto1addobjectdb/img/fondoim.jpg");
     -fx-background-size: 10px 10px 10px 10px;
 }
 

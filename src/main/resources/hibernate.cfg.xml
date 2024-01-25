@@ -16,10 +16,10 @@
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
 
-        <mapping class="com.example.reto1addihibernate.domain.usuario.Usuario"/>
-        <mapping class="com.example.reto1addihibernate.domain.pedido.Pedido"/>
-        <mapping class="com.example.reto1addihibernate.domain.Items.Item"/>
-        <mapping class="com.example.reto1addihibernate.domain.productos.Producto"/>
+        <mapping class="com.example.reto1addobjectdb.domain.usuario.Usuario"/>
+        <mapping class="com.example.reto1addobjectdb.domain.pedido.Pedido"/>
+        <mapping class="com.example.reto1addobjectdb.domain.Items.Item"/>
+        <mapping class="com.example.reto1addobjectdb.domain.productos.Producto"/>
 
     </session-factory>
 

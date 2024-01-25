@@ -10,16 +10,16 @@ module com.example.reto1addihibernate {
     requires jasperreports;
 
 
-    opens com.example.reto1addihibernate.domain.usuario;
-    opens com.example.reto1addihibernate.domain.pedido;
-    opens com.example.reto1addihibernate.domain.Items;
-    opens com.example.reto1addihibernate.domain.productos;
+    opens com.example.reto1addobjectdb.domain.usuario;
+    opens com.example.reto1addobjectdb.domain.pedido;
+    opens com.example.reto1addobjectdb.domain.Items;
+    opens com.example.reto1addobjectdb.domain.productos;
 
-    opens com.example.reto1addihibernate to javafx.fxml;
-    opens com.example.reto1addihibernate.controllers to javafx.fxml;
+    opens com.example.reto1addobjectdb to javafx.fxml;
+    opens com.example.reto1addobjectdb.controllers to javafx.fxml;
 
-    exports com.example.reto1addihibernate;
-    exports com.example.reto1addihibernate.controllers;
+    exports com.example.reto1addobjectdb;
+    exports com.example.reto1addobjectdb.controllers;
 
 
 }
