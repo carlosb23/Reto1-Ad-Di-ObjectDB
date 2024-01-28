@@ -1,12 +1,12 @@
 package com.example.reto1addobjectdb.domain.Items;
 
+import com.example.reto1addobjectdb.ObjectDBUtil;
 import com.example.reto1addobjectdb.domain.DAO;
-import com.example.reto1addobjectdb.domain.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import com.example.reto1addobjectdb.domain.pedido.Pedido;
 
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 
 /**
@@ -22,9 +22,12 @@ public class ItemDAO implements DAO<Item> {
     @Override
     public ArrayList<Item> getAll() {
         var salida = new ArrayList<Item>(0);
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query<Item> query = session.createQuery("from Item", Item.class);
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try{
+            TypedQuery<Item> query = entityManager.createQuery("from Item", Item.class);
             salida = (ArrayList<Item>) query.getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return salida;
     }
@@ -48,25 +51,23 @@ public class ItemDAO implements DAO<Item> {
      */
     @Override
     public Item save(Item data) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = null;
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try {
             try {
                 // Comenzar la transacción
-                transaction = session.beginTransaction();
+                entityManager.getTransaction().begin();
 
                 // Guardar el nuevo pedido en la base de datos
-                session.save(data);
+                entityManager.persist(data);
 
                 // Commit de la transacción
-                transaction.commit();
-            } catch (Exception e) {
-                // Manejar cualquier excepción que pueda ocurrir durante la transacción
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-                e.printStackTrace();
+                entityManager.getTransaction().commit();
+            } finally {
+                entityManager.close();
             }
             return data;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -74,55 +75,44 @@ public class ItemDAO implements DAO<Item> {
      * Actualiza un elemento (item) en la base de datos.
      *
      * @param data El elemento a actualizar.
+     * @return
      */
     @Override
-    public void update(Item data) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = null;
-
-            try {
-                transaction = session.beginTransaction();
-
-                // Actualizar el item en la base de datos
-                session.update(data);
-
-                transaction.commit();
-            } catch (Exception e) {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-                e.printStackTrace();
-                // Manejo de errores, por ejemplo, lanzar una excepción personalizada
-                throw new RuntimeException("Error al actualizar el item en la base de datos", e);
-            }
-        }
+    public Pedido update(Item data) {
+        return null;
     }
 
     /**
      * Elimina un elemento (item) de la base de datos.
      *
      * @param data El elemento a eliminar.
+     * @return
      */
     @Override
-    public void delete(Item data) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+    public boolean delete(Item data) {
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try {
 
             try {
-                // Antes de eliminar el item, asegúrate de que esté gestionado por la sesión actual
-                Item itemToDelete = session.get(Item.class, data.getId());
+                entityManager.getTransaction().begin();
 
-                // Elimina el item
-                session.delete(itemToDelete);
+                if(!entityManager.contains(data)){
+                    data = entityManager.merge(data);
+                }
+                entityManager.remove(data);
+                entityManager.getTransaction().commit();
 
-                transaction.commit();
             } catch (Exception e) {
                 // En caso de error, realiza un rollback
-                if (transaction != null) {
-                    transaction.rollback();
+                if (entityManager.getTransaction().isActive()) {
+                    entityManager.getTransaction().rollback();
                 }
-                e.printStackTrace();
+            }finally {
+                entityManager.close();
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+        return false;
     }
 }

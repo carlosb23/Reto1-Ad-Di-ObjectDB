@@ -1,6 +1,9 @@
 package com.example.reto1addobjectdb.domain;
 
+import com.example.reto1addobjectdb.domain.pedido.Pedido;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interfaz genérica para definir las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en la base de datos.
@@ -36,13 +39,16 @@ public interface DAO<T> {
      * Actualiza la información de un objeto existente en la base de datos.
      *
      * @param data Objeto con la información actualizada.
+     * @return
      */
-    public void update(T data);
+    public Pedido update(T data);
 
     /**
      * Elimina un objeto de la base de datos.
      *
      * @param data Objeto a eliminar.
+     * @return
      */
-    public void delete(T data);
+    public boolean delete(T data);
+
 }

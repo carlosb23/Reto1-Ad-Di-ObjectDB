@@ -2,7 +2,6 @@ package com.example.reto1addobjectdb.controllers;
 
 import com.example.reto1addobjectdb.App;
 import com.example.reto1addobjectdb.SessionData;
-import com.example.reto1addobjectdb.domain.HibernateUtil;
 import com.example.reto1addobjectdb.domain.Items.ItemDAO;
 import com.example.reto1addobjectdb.domain.pedido.Pedido;
 import com.example.reto1addobjectdb.domain.pedido.PedidoDAO;
@@ -11,33 +10,15 @@ import com.example.reto1addobjectdb.domain.usuario.UsuarioDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
-import net.sf.jasperreports.swing.JRViewer;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-import javax.swing.*;
 import java.net.URL;
-import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -179,11 +160,22 @@ public class VentanaPrincipalController implements Initializable {
         nuevoPedido.setItems(new ArrayList<>());
         nuevoPedido.setTotal(0.0);
 
-        observableListPedidos.add(nuevoPedido);
-        tablaproduct.setItems(observableListPedidos);
+        // Obtener la lista actual de pedidos de la tabla
+        ObservableList<Pedido> pedidosActuales = tablaproduct.getItems();
 
-        SessionData.setCurrentPedido((new PedidoDAO()).save(nuevoPedido));
+        // Agregar el nuevo pedido a la lista
+        pedidosActuales.add(nuevoPedido);
+
+        // Establecer la lista actualizada de pedidos en la tabla
+        tablaproduct.setItems(pedidosActuales);
+
+        // Guardar el nuevo pedido en la base de datos
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        pedidoDAO.save(nuevoPedido);
+
+        // Actualizar el usuario actual en SessionData
         SessionData.setCurrentUser((new UsuarioDAO().get(SessionData.getCurrentUser().getId())));
+
     }
 
     /**

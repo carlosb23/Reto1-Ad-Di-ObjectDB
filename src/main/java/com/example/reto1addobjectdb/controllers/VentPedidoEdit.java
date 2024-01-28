@@ -70,21 +70,26 @@ public class VentPedidoEdit {
 
         Pedido pedido = SessionData.getCurrentPedido();
 
-        if(pedido !=null){
+        if(pedido != null) {
             Item item = new Item();
-            item.setCodigo(pedido);
+            item.setCodigo_pedido(pedido);
             item.setCantidad((Integer) spinnerCantidad.getValue());
             item.setProducto(comboProduct.getSelectionModel().getSelectedItem());
 
-            SessionData.setCurrentItem((new ItemDAO().save(item)));
-            SessionData.setCurrentItem(item);
+            // Guardar el nuevo ítem en la base de datos
+            Item nuevoItem = itemDao.save(item);
 
-            double total = calcularTotal() + (item.getCantidad() * item.getProducto().getPrecio());
-            SessionData.getCurrentPedido().setTotal(total);
+            // Actualizar la lista de ítems del pedido en SessionData
+            pedido.getItems().add(nuevoItem);
 
-            pedidoDAO.update(SessionData.getCurrentPedido());
+            // Actualizar el total del pedido sumando el precio del nuevo ítem
+            double total = pedido.getTotal() + (nuevoItem.getCantidad() * nuevoItem.getProducto().getPrecio());
+            pedido.setTotal(total);
 
-            // Volver a la ventana de datos u otra lógica según tus necesidades
+            // Actualizar el pedido en la base de datos
+            pedidoDAO.update(pedido);
+
+            // Volver a la ventana de datos
             App.ventanaDatos("Views/ventana-datos.fxml");
         }
     }
@@ -94,12 +99,5 @@ public class VentPedidoEdit {
      *
      * @return El total del pedido.
      */
-    private double calcularTotal() {
-        double total = 0.0;
-        for (Item item : SessionData.getCurrentPedido().getItems()) {
-            total += item.getCantidad() * item.getProducto().getPrecio();
-        }
-        return total;
-    }
 
 }

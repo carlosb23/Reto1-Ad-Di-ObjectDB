@@ -2,13 +2,9 @@ module com.example.reto1addihibernate {
     requires javafx.controls;
     requires javafx.fxml;
     requires lombok;
-    requires org.hibernate.orm.core;
-    requires jakarta.persistence;
     requires java.naming;
     requires java.sql;
-    requires javafx.swing;
-    requires jasperreports;
-
+    requires javax.persistence;
 
     opens com.example.reto1addobjectdb.domain.usuario;
     opens com.example.reto1addobjectdb.domain.pedido;
@@ -17,7 +13,9 @@ module com.example.reto1addihibernate {
 
     opens com.example.reto1addobjectdb to javafx.fxml;
     opens com.example.reto1addobjectdb.controllers to javafx.fxml;
+    opens com.example.reto1addobjectdb.domain to javafx.fxml;
 
+    exports com.example.reto1addobjectdb.domain;
     exports com.example.reto1addobjectdb;
     exports com.example.reto1addobjectdb.controllers;
 

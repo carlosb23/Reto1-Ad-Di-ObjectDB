@@ -1,10 +1,12 @@
 package com.example.reto1addobjectdb.domain.productos;
 
+import com.example.reto1addobjectdb.ObjectDBUtil;
 import com.example.reto1addobjectdb.domain.DAO;
-import com.example.reto1addobjectdb.domain.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import com.example.reto1addobjectdb.domain.pedido.Pedido;
 
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +26,12 @@ public class ProductoDAO implements DAO<Producto> {
     @Override
     public ArrayList<Producto> getAll() {
         var salida = new ArrayList<Producto>(0);
-        try(Session sesion = HibernateUtil.getSessionFactory().openSession()){
-            Query<Producto> query = sesion.createQuery("from Producto", Producto.class);
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try{
+            TypedQuery<Producto> query = entityManager.createQuery("select p from Producto p", Producto.class);
             salida = (ArrayList<Producto>) query.getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return salida;
     }
@@ -57,20 +62,24 @@ public class ProductoDAO implements DAO<Producto> {
      * Actualiza la información de un producto existente en la base de datos.
      *
      * @param data Producto con la información actualizada.
+     * @return
      */
     @Override
-    public void update(Producto data) {
+    public Pedido update(Producto data) {
 
+        return null;
     }
 
     /**
      * Elimina un producto de la base de datos.
      *
      * @param data Producto a eliminar.
+     * @return
      */
     @Override
-    public void delete(Producto data) {
+    public boolean delete(Producto data) {
 
+        return false;
     }
 
     /**
@@ -82,9 +91,10 @@ public class ProductoDAO implements DAO<Producto> {
      */
     public List<String> getnombreProduct(String nombre) {
         List<String> nombres = new ArrayList<>();
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<String> query = session.createQuery("select p.nombre from Producto p", String.class);
+        try {
+            TypedQuery<String> query = entityManager.createQuery("select p.nombre_producto from Producto p", String.class);
             nombres = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,5 +103,19 @@ public class ProductoDAO implements DAO<Producto> {
         }
 
         return nombres;
+    }
+
+
+    public void saveAll(List<Producto> data) {
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            for (Producto pr : data) {
+                entityManager.persist(pr);
+            }
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
     }
 }

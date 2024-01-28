@@ -2,9 +2,10 @@ package com.example.reto1addobjectdb.domain.Items;
 
 import com.example.reto1addobjectdb.domain.pedido.Pedido;
 import com.example.reto1addobjectdb.domain.productos.Producto;
-import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -12,35 +13,32 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name = "items")
+@NoArgsConstructor
 public class Item implements Serializable {
 
     /**
      * Identificador único del item.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     /**
      * Cantidad de productos asociados al item.
      */
-    @Column(name = "cantidad")
     private int cantidad;
 
     /**
      * Producto asociado al item.
      */
     @OneToOne
-    @JoinColumn(name = "product_id")
     private Producto producto;
 
     /**
      * Pedido al que pertenece el item.
      */
     @ManyToOne
-    @JoinColumn(name = "codigo_item", referencedColumnName = "codigo_pedido", nullable = false)
-    private Pedido codigo;
+    private Pedido codigo_pedido;
 
     /**
      * Representación de cadena del objeto Item.
@@ -52,8 +50,8 @@ public class Item implements Serializable {
         return "Item{" +
                 "id=" + id +
                 ", cantidad=" + cantidad +
-                ", producto=" + producto.getNombre_producto() +
-                ", codigo=" + codigo +
+                ", producto=" + producto +
+                ", codigo=" + codigo_pedido.getCodigo_pedido() +
                 '}';
     }
 }

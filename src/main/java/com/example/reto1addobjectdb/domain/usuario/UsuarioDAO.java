@@ -1,14 +1,16 @@
 package com.example.reto1addobjectdb.domain.usuario;
 
+import com.example.reto1addobjectdb.ObjectDBUtil;
 import com.example.reto1addobjectdb.domain.DAO;
-import com.example.reto1addobjectdb.domain.HibernateUtil;
-import jakarta.persistence.NoResultException;
+import com.example.reto1addobjectdb.domain.pedido.Pedido;
 import lombok.extern.java.Log;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementación de la interfaz DAO para acceder a la base de datos y gestionar usuarios.
@@ -28,9 +30,12 @@ public class UsuarioDAO implements DAO<Usuario> {
     public ArrayList<Usuario> getAll() {
 
         var salida = new ArrayList<Usuario>(0);
-        try(Session s = HibernateUtil.getSessionFactory().openSession()){
-            Query<Usuario> query = s.createQuery("from Usuario", Usuario.class);
+        EntityManager s = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            TypedQuery<Usuario> query = s.createQuery("Select u from Usuario u", Usuario.class);
             salida = (ArrayList<Usuario>) query.getResultList();
+        }finally {
+
         }
         return salida;
     }
@@ -44,12 +49,18 @@ public class UsuarioDAO implements DAO<Usuario> {
     @Override
     public Usuario get(Long id) {
 
-        var salida = new Usuario();
-
-        try(Session s = HibernateUtil.getSessionFactory().openSession()){
-            salida = s.get(Usuario.class,id);
+        Usuario salida = null;
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try{
+            TypedQuery<Usuario> query = entityManager.createQuery("select u from Usuario u where u.id = :id", Usuario.class);
+            query.setParameter("id", id);
+            var resultado = query.getResultList();
+            if (resultado.size() > 0) {
+                salida = resultado.get(0);
+            }
+        } finally {
+            entityManager.close();
         }
-
         return salida;
 
     }
@@ -69,40 +80,37 @@ public class UsuarioDAO implements DAO<Usuario> {
      * Actualiza la información de un usuario existente en la base de datos.
      *
      * @param data Usuario con la información actualizada.
+     * @return
      */
     @Override
-    public void update(Usuario data) {
+    public Pedido update(Usuario data) {
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = null;
-
-            try {
-                transaction = session.beginTransaction();
-
-                // Actualizar el usuario en la base de datos
-                session.update(data);
-
-                transaction.commit();
-            } catch (Exception e) {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-                e.printStackTrace();
-                // Manejo de errores, por ejemplo, lanzar una excepción personalizada
-                throw new RuntimeException("Error al actualizar el usuario en la base de datos", e);
-            }
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            // Utiliza el método merge para actualizar la entidad en la base de datos.
+            data = entityManager.merge(data);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            // Maneja la excepción adecuadamente (puede imprimir o lanzar una excepción personalizada).
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
         }
-
+        return null;
     }
 
     /**
      * Elimina un usuario de la base de datos.
      *
      * @param data Usuario a eliminar.
+     * @return
      */
     @Override
-    public void delete(Usuario data) {
+    public boolean delete(Usuario data) {
 
+        return false;
     }
 
     /**
@@ -114,16 +122,19 @@ public class UsuarioDAO implements DAO<Usuario> {
      */
     public Usuario validateUser(String name, String password) {
         Usuario result = null;
-        try( Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query<Usuario> q = session.createQuery("from Usuario where username=:u and password=:p",Usuario.class);
-            q.setParameter("u",name);
-            q.setParameter("p",password);
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            TypedQuery<Usuario> q = entityManager.createQuery("select u from Usuario u where u.username=:u and u.password=:p", Usuario.class);
+            q.setParameter("u", name);
+            q.setParameter("p", password);
 
             try {
                 result = q.getSingleResult();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+        } finally {
+
         }
         return result;
     }
@@ -136,8 +147,9 @@ public class UsuarioDAO implements DAO<Usuario> {
      */
     public Usuario getUserByEmail(String email) {
         Usuario result = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Usuario> query = session.createQuery("from Usuario where email=:e", Usuario.class);
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try  {
+            TypedQuery<Usuario> query = entityManager.createQuery("Select u from Usuario u where u.email=:e", Usuario.class);
             query.setParameter("e", email);
 
             try {
@@ -149,9 +161,26 @@ public class UsuarioDAO implements DAO<Usuario> {
                 // Otra excepción
                 System.out.println("Error al buscar usuario por correo electrónico: " + e.getMessage());
             }
+        }finally {
+
         }
         return result;
     }
+
+
+    public void saveAll(List<Usuario> data) {
+        EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            for (Usuario u : data) {
+                entityManager.persist(u);
+            }
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+    }
+
 }
 
 

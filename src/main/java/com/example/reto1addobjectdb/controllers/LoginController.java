@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
 import java.net.URL;
@@ -30,6 +31,12 @@ public class LoginController implements Initializable {
     private Label info;
     @FXML
     private Label olvicontra;
+    @FXML
+    private ImageView verpass;
+    @FXML
+    private ImageView ocultarpass;
+    @FXML
+    private TextField visiblepass;
 
     /**
      * Inicializa el controlador de la pantalla de inicio de sesión.
@@ -116,5 +123,26 @@ public class LoginController implements Initializable {
         alert.setTitle(titulo);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void verpass(Event event) {
+
+        verpass.setVisible(false);
+        ocultarpass.setVisible(true);
+
+        txtPassword.setVisible(false);
+        visiblepass.setText(txtPassword.getText());
+        visiblepass.setVisible(true);
+
+    }
+
+    @FXML
+    public void ocultarpass(Event event) {
+
+        verpass.setVisible(true);
+        ocultarpass.setVisible(false);
+        visiblepass.setVisible(false);
+        txtPassword.setVisible(true);
     }
 }

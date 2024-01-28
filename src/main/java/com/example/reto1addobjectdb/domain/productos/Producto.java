@@ -1,8 +1,11 @@
 package com.example.reto1addobjectdb.domain.productos;
-
-import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -13,8 +16,15 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name = "producto")
+@NoArgsConstructor
 public class Producto implements Serializable {
+
+    public Producto( String nombre_producto, double precio, Integer cantidad) {
+        this.nombre_producto = nombre_producto;
+        this.precio = precio;
+        this.cantidad = cantidad;
+    }
+
     /**
      * Identificador único del producto.
      */
@@ -25,19 +35,19 @@ public class Producto implements Serializable {
     /**
      * Nombre del producto.
      */
-    @Column(name = "nombre_producto")
+
     private String nombre_producto;
 
     /**
      * Precio del producto.
      */
-    @Column(name = "precio")
+
     private double precio;
 
     /**
      * Cantidad disponible en inventario del producto.
      */
-    @Column(name = "cantidad")
+
     private Integer cantidad;
 
     /**
@@ -49,7 +59,7 @@ public class Producto implements Serializable {
     public String toString() {
         return "Producto{" +
                 "id=" + id +
-                ", nombre='" + nombre_producto + '\'' +
+                ", nombre_producto='" + nombre_producto + '\'' +
                 ", precio=" + precio +
                 ", cantidad=" + cantidad +
                 '}';

@@ -53,7 +53,7 @@ public class VentanaDatosController implements Initializable {
             return new SimpleStringProperty(id);
         });
         columcodigo.setCellValueFactory((fila) -> {
-            String codigo = String.valueOf(fila.getValue().getCodigo().getCodigo_pedido());
+            String codigo = String.valueOf(fila.getValue().getCodigo_pedido().getCodigo_pedido());
             return new SimpleStringProperty(codigo);
         });
         columcantidad.setCellValueFactory((fila) -> {
@@ -94,7 +94,7 @@ public class VentanaDatosController implements Initializable {
      *
      * @return El total del pedido.
      */
-    private double
+    public double
     calcularTotal() {
         double total = 0.0;
         for (Item item : SessionData.getCurrentPedido().getItems()) {
