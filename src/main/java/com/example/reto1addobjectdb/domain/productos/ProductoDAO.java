@@ -105,6 +105,11 @@ public class ProductoDAO implements DAO<Producto> {
         return nombres;
     }
 
+    /**
+     * Guarda una lista de productos en la base de datos.
+     *
+     * @param data La lista de productos que se desea guardar.
+     */
 
     public void saveAll(List<Producto> data) {
         EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();

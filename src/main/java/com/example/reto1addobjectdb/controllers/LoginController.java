@@ -125,23 +125,35 @@ public class LoginController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Maneja el evento para mostrar la contraseña como texto plano.
+     *
+     * @param event El evento asociado al botón de mostrar contraseña.
+     */
     @FXML
     public void verpass(Event event) {
-
+        // Oculta el icono de mostrar contraseña y muestra el de ocultar contraseña
         verpass.setVisible(false);
         ocultarpass.setVisible(true);
 
+        // Oculta el campo de contraseña y muestra un label con el texto de la contraseña
         txtPassword.setVisible(false);
         visiblepass.setText(txtPassword.getText());
         visiblepass.setVisible(true);
-
     }
 
+    /**
+     * Maneja el evento para ocultar la contraseña y volver al modo de contraseña oculta.
+     *
+     * @param event El evento asociado al botón de ocultar contraseña.
+     */
     @FXML
     public void ocultarpass(Event event) {
-
+        // Muestra el icono de mostrar contraseña y oculta el de ocultar contraseña
         verpass.setVisible(true);
         ocultarpass.setVisible(false);
+
+        // Oculta el label con el texto de la contraseña y muestra el campo de contraseña
         visiblepass.setVisible(false);
         txtPassword.setVisible(true);
     }

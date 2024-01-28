@@ -167,6 +167,11 @@ public class UsuarioDAO implements DAO<Usuario> {
         return result;
     }
 
+    /**
+     * Guarda una lista de productos en la base de datos.
+     *
+     * @param data La lista de usuarios que se desea guardar.
+     */
 
     public void saveAll(List<Usuario> data) {
         EntityManager entityManager = ObjectDBUtil.getEntityManagerFactory().createEntityManager();
